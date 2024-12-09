@@ -1,0 +1,138 @@
+# Copyright (C) 2024 WP WhatsApp Chatbox
+# This file is distributed under the same license as the WP WhatsApp Chatbox package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP WhatsApp Chatbox 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-whatsapp-chatbox\n"
+"POT-Creation-Date: 2024-01-22 12:00:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2024-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: WP-CLI 2.8.1\n"
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:123
+msgid "WhatsApp Settings"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:130
+msgid "WhatsApp Number"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:138
+msgid "Account Name"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:146
+msgid "Welcome Message"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:154
+msgid "Avatar Image"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:162
+msgid "Avatar Border Color"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:170
+msgid "Primary Color"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:216
+msgid "Select the border color for the avatar image"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:224
+msgid "Enter your WhatsApp number with country code (e.g., +1234567890)"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:232
+msgid "Enter the name to display in the chat"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:240
+msgid "Enter the welcome message to show in the chat"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:248
+msgid "Upload an avatar image"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:256
+msgid "Select the primary color for the chat box"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:264
+msgid "Choose Image"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:265
+msgid "Remove Image"
+msgstr ""
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:10
+msgid "WhatsApp Chat Widget"
+msgstr ""
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:12
+msgid "Open WhatsApp Chat"
+msgstr ""
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:39
+msgid "Online"
+msgstr ""
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:42
+msgid "Close chat"
+msgstr ""
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:67
+msgid "Type a message..."
+msgstr ""
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:68
+msgid "Type a message"
+msgstr ""
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:69
+msgid "Send message"
+msgstr ""
+
+msgid "Business Hours"
+msgstr ""
+
+msgid "Enable Business Hours"
+msgstr ""
+
+msgid "Set Business Hours"
+msgstr ""
+
+msgid "Configure when the WhatsApp chat widget should be visible based on your business hours."
+msgstr ""
+
+msgid "Enable time-based visibility for the chat widget"
+msgstr ""
+
+msgid "Monday"
+msgstr ""
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Friday"
+msgstr ""
+
+msgid "Saturday"
+msgstr ""
+
+msgid "Sunday"
+msgstr ""

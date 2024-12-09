@@ -1,0 +1,73 @@
+/**
+ * Admin styles for WP WhatsApp Chatbox
+ */
+
+.wp-whatsapp-chatbox-admin .form-table th {
+    width: 200px;
+}
+
+.wp-whatsapp-chatbox-admin .form-table td {
+    vertical-align: top;
+    padding-top: 15px;
+}
+
+.wp-whatsapp-chatbox-admin .description {
+    font-style: italic;
+    color: #666;
+}
+
+.wp-whatsapp-chatbox-admin input[type="text"],
+.wp-whatsapp-chatbox-admin input[type="number"],
+.wp-whatsapp-chatbox-admin textarea {
+    width: 400px;
+    max-width: 100%;
+}
+
+.wp-whatsapp-chatbox-admin .postbox {
+    margin-top: 20px;
+}
+
+.wp-whatsapp-chatbox-admin .postbox .hndle {
+    padding: 10px;
+    border-bottom: 1px solid #ccd0d4;
+}
+
+.wp-whatsapp-chatbox-admin .postbox .inside {
+    padding: 15px;
+    margin: 0;
+}
+
+.wp-whatsapp-chatbox-admin code {
+    display: inline-block;
+    padding: 5px 10px;
+    background: #f0f0f1;
+    border-radius: 3px;
+    font-size: 13px;
+}
+
+.business-hours-container {
+    max-width: 600px;
+}
+
+.business-hours-day {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 15px;
+}
+
+.day-label {
+    min-width: 100px;
+}
+
+.time-input {
+    width: 100px;
+}
+
+.time-separator {
+    margin: 0 10px;
+}
+
+.day-enabled {
+    margin: 0 !important;
+}

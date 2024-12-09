@@ -1,0 +1,104 @@
+# Copyright (C) 2024 WP WhatsApp Chatbox
+# This file is distributed under the same license as the WP WhatsApp Chatbox package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP WhatsApp Chatbox 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-whatsapp-chatbox\n"
+"POT-Creation-Date: 2024-01-22 12:00:00+00:00\n"
+"PO-Revision-Date: 2024-01-22 12:00:00+00:00\n"
+"Last-Translator: \n"
+"Language-Team: Spanish\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: WP-CLI 2.8.1\n"
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:123
+msgid "WhatsApp Settings"
+msgstr "Configuración de WhatsApp"
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:130
+msgid "WhatsApp Number"
+msgstr "Número de WhatsApp"
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:138
+msgid "Account Name"
+msgstr "Nombre de la Cuenta"
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:146
+msgid "Welcome Message"
+msgstr "Mensaje de Bienvenida"
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:154
+msgid "Avatar Image"
+msgstr "Imagen de Avatar"
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:162
+msgid "Avatar Border Color"
+msgstr "Color del Borde del Avatar"
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:170
+msgid "Primary Color"
+msgstr "Color Principal"
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:216
+msgid "Select the border color for the avatar image"
+msgstr "Selecciona el color del borde para la imagen del avatar"
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:224
+msgid "Enter your WhatsApp number with country code (e.g., +1234567890)"
+msgstr "Ingresa tu número de WhatsApp con código de país (ej., +1234567890)"
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:232
+msgid "Enter the name to display in the chat"
+msgstr "Ingresa el nombre para mostrar en el chat"
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:240
+msgid "Enter the welcome message to show in the chat"
+msgstr "Ingresa el mensaje de bienvenida para mostrar en el chat"
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:248
+msgid "Upload an avatar image"
+msgstr "Sube una imagen de avatar"
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:256
+msgid "Select the primary color for the chat box"
+msgstr "Selecciona el color principal para el chat"
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:264
+msgid "Choose Image"
+msgstr "Elegir Imagen"
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:265
+msgid "Remove Image"
+msgstr "Eliminar Imagen"
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:10
+msgid "WhatsApp Chat Widget"
+msgstr "Widget de Chat de WhatsApp"
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:12
+msgid "Open WhatsApp Chat"
+msgstr "Abrir Chat de WhatsApp"
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:39
+msgid "Online"
+msgstr "En línea"
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:42
+msgid "Close chat"
+msgstr "Cerrar chat"
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:67
+msgid "Type a message..."
+msgstr "Escribe un mensaje..."
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:68
+msgid "Type a message"
+msgstr "Escribe un mensaje"
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:69
+msgid "Send message"
+msgstr "Enviar mensaje"
