@@ -1,6 +1,16 @@
 <?php
 /**
  * The admin-specific functionality of the plugin.
+ * 
+ * Handles all admin-side operations including:
+ * - Settings page registration and rendering
+ * - Business hours configuration
+ * - Asset enqueueing
+ * - Option validation
+ *
+ * @since      1.0.0
+ * @package    WP_WhatsApp_Chatbox
+ * @subpackage WP_WhatsApp_Chatbox/admin
  */
 class WP_WhatsApp_Chatbox_Admin {
 
@@ -187,6 +197,13 @@ class WP_WhatsApp_Chatbox_Admin {
         );
     }
 
+    /**
+     * Validates and sanitizes the settings input
+     *
+     * @since  1.0.0
+     * @param  array $input The raw input array from the settings form
+     * @return array        The sanitized output array
+     */
     public function validate_settings($input) {
         $valid = array();
 
@@ -347,6 +364,13 @@ class WP_WhatsApp_Chatbox_Admin {
         echo '<p class="description">' . __('Enable time-based visibility for the chat widget', 'wp-whatsapp-chatbox') . '</p>';
     }
 
+    /**
+     * Renders the business hours configuration fields
+     * Displays time inputs and switches for each day of the week
+     *
+     * @since 1.0.0
+     * @return void
+     */
     public function render_business_hours_fields() {
         $options = get_option($this->plugin_name);
         $business_hours = isset($options['wp_whatsapp_chatbox_business_hours']) ? $options['wp_whatsapp_chatbox_business_hours'] : array();

@@ -1,3 +1,7 @@
+/**
+ * Public-facing JavaScript functionality
+ * Handles chat widget interactions, visibility, and business hours logic
+ */
 (function($) {
     'use strict';
 
@@ -9,7 +13,12 @@
         const chatboxForm = $('.wp-whatsapp-chatbox-input-form');
         let isVisible = false;
 
-        // Toggle chat visibility
+        /**
+         * Toggles the chat popup visibility with animation
+         * 
+         * @param {boolean} show Whether to show or hide the popup
+         * @returns {void}
+         */
         function toggleChat(show) {
             isVisible = show;
             chatboxPopup.attr('aria-hidden', !show);
@@ -95,6 +104,11 @@
             }
         });
 
+        /**
+         * Checks if current time falls within configured business hours
+         * 
+         * @returns {boolean} True if within business hours, false otherwise
+         */
         function isWithinBusinessHours() {
             if (!wpWhatsAppChatbox.businessHoursEnabled) {
                 return true;
@@ -125,6 +139,12 @@
             return currentTime >= startTime && currentTime <= endTime;
         }
 
+        /**
+         * Updates widget visibility based on business hours
+         * Hides widget outside business hours if enabled
+         * 
+         * @returns {void}
+         */
         function updateWidgetVisibility() {
             const shouldShow = isWithinBusinessHours();
             chatbox.toggle(shouldShow);

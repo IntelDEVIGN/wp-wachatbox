@@ -1,6 +1,12 @@
 <?php
 /**
  * The public-facing functionality of the plugin.
+ * 
+ * Handles all front-end operations including:
+ * - Widget rendering
+ * - Asset loading
+ * - Business hours visibility
+ * - Shortcode registration
  *
  * @since      1.0.0
  * @package    WP_WhatsApp_Chatbox
@@ -55,9 +61,11 @@ class WP_WhatsApp_Chatbox_Public {
     }
 
     /**
-     * Register the JavaScript for the public-facing side of the site.
+     * Enqueues the JavaScript with localized data
+     * Includes business hours, welcome message, and styling options
      *
-     * @since    1.0.0
+     * @since  1.0.0
+     * @return void
      */
     public function enqueue_scripts() {
         wp_enqueue_script(
@@ -98,9 +106,11 @@ class WP_WhatsApp_Chatbox_Public {
     }
 
     /**
-     * Render the chat widget.
+     * Renders the chat widget HTML
+     * Includes avatar, messages, and input area
      *
-     * @since    1.0.0
+     * @since  1.0.0
+     * @return void
      */
     public function display_chatbox() {
         include_once 'partials/wp-whatsapp-chatbox-public-display.php';
