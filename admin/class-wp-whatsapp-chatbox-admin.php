@@ -65,7 +65,12 @@ class WP_WhatsApp_Chatbox_Admin {
     }
 
     public function register_settings() {
-        register_setting($this->plugin_name, $this->plugin_name, array($this, 'validate_settings'));
+        // Register the settings with WordPress
+        register_setting(
+            $this->plugin_name,                                  // Option group
+            $this->plugin_name,                                  // Option name
+            array($this, 'validate_settings')                    // Sanitization callback
+        );
 
         add_settings_section(
             'wp_whatsapp_chatbox_general',
@@ -191,8 +196,15 @@ class WP_WhatsApp_Chatbox_Admin {
         // Validate Account Name
         $valid['wp_whatsapp_chatbox_account_name'] = sanitize_text_field($input['wp_whatsapp_chatbox_account_name']);
 
-        // Validate Welcome Message
-        $valid['wp_whatsapp_chatbox_welcome_message'] = sanitize_textarea_field($input['wp_whatsapp_chatbox_welcome_message']);
+        // Validate Welcome Message - preserve newlines but sanitize
+        if (isset($input['wp_whatsapp_chatbox_welcome_message'])) {
+            $valid['wp_whatsapp_chatbox_welcome_message'] = wp_kses(
+                $input['wp_whatsapp_chatbox_welcome_message'],
+                array('br' => array()) // Allow only <br> tags
+            );
+        } else {
+            $valid['wp_whatsapp_chatbox_welcome_message'] = __('¡Hola!, ¿Cómo le podemos ayudar?', 'wp-whatsapp-chatbox');
+        }
 
         // Validate Primary Color
         $valid['wp_whatsapp_chatbox_primary_color'] = sanitize_hex_color($input['wp_whatsapp_chatbox_primary_color']);
@@ -209,7 +221,7 @@ class WP_WhatsApp_Chatbox_Admin {
         $valid['wp_whatsapp_chatbox_border_radius'] = $border_radius >= 0 ? $border_radius : 15;
 
         // Validate Avatar
-        $valid['wp_whatsapp_chatbox_avatar'] = sanitize_text_field($input['wp_whatsapp_chatbox_avatar']);
+        $valid['wp_whatsapp_chatbox_avatar'] = esc_url_raw($input['wp_whatsapp_chatbox_avatar']);
 
         // Validate Avatar Border Color
         $valid['wp_whatsapp_chatbox_avatar_border_color'] = sanitize_hex_color($input['wp_whatsapp_chatbox_avatar_border_color']);
@@ -218,15 +230,19 @@ class WP_WhatsApp_Chatbox_Admin {
         $valid['wp_whatsapp_chatbox_enable_hours'] = isset($input['wp_whatsapp_chatbox_enable_hours']) ? '1' : '0';
 
         // Validate Business Hours
-        $days = array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
-        $valid['wp_whatsapp_chatbox_business_hours'] = array();
-
-        foreach ($days as $day) {
-            $valid['wp_whatsapp_chatbox_business_hours'][$day] = array(
-                'enabled' => isset($input['wp_whatsapp_chatbox_business_hours'][$day]['enabled']) ? '1' : '0',
-                'start' => sanitize_text_field($input['wp_whatsapp_chatbox_business_hours'][$day]['start']),
-                'end' => sanitize_text_field($input['wp_whatsapp_chatbox_business_hours'][$day]['end'])
-            );
+        if (isset($input['wp_whatsapp_chatbox_business_hours']) && is_array($input['wp_whatsapp_chatbox_business_hours'])) {
+            $days = array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
+            $valid['wp_whatsapp_chatbox_business_hours'] = array();
+            
+            foreach ($days as $day) {
+                if (isset($input['wp_whatsapp_chatbox_business_hours'][$day])) {
+                    $valid['wp_whatsapp_chatbox_business_hours'][$day] = array(
+                        'enabled' => isset($input['wp_whatsapp_chatbox_business_hours'][$day]['enabled']) ? '1' : '0',
+                        'start' => sanitize_text_field($input['wp_whatsapp_chatbox_business_hours'][$day]['start']),
+                        'end' => sanitize_text_field($input['wp_whatsapp_chatbox_business_hours'][$day]['end'])
+                    );
+                }
+            }
         }
 
         return $valid;
@@ -275,8 +291,14 @@ class WP_WhatsApp_Chatbox_Admin {
 
     public function render_welcome_message_field() {
         $options = get_option($this->plugin_name);
-        $value = isset($options['wp_whatsapp_chatbox_welcome_message']) ? $options['wp_whatsapp_chatbox_welcome_message'] : '';
-        echo '<textarea class="large-text" rows="3" name="' . $this->plugin_name . '[wp_whatsapp_chatbox_welcome_message]">' . esc_textarea($value) . '</textarea>';
+        $value = isset($options['wp_whatsapp_chatbox_welcome_message']) ? 
+            $options['wp_whatsapp_chatbox_welcome_message'] : 
+            __('¡Hola!, ¿Cómo le podemos ayudar?', 'wp-whatsapp-chatbox');
+        
+        echo '<textarea class="large-text" rows="3" name="' . $this->plugin_name . '[wp_whatsapp_chatbox_welcome_message]">' 
+            . esc_textarea($value) 
+            . '</textarea>';
+        echo '<p class="description">' . __('Enter the welcome message to show in the chat. You can use line breaks.', 'wp-whatsapp-chatbox') . '</p>';
     }
 
     public function render_primary_color_field() {
@@ -288,7 +310,11 @@ class WP_WhatsApp_Chatbox_Admin {
     public function render_auto_display_field() {
         $options = get_option($this->plugin_name);
         $value = isset($options['wp_whatsapp_chatbox_auto_display']) ? $options['wp_whatsapp_chatbox_auto_display'] : '0';
-        echo '<input type="checkbox" name="' . $this->plugin_name . '[wp_whatsapp_chatbox_auto_display]" value="1" ' . checked('1', $value, false) . ' />';
+        
+        echo '<div class="switch-wrapper">';
+        echo '<input type="checkbox" id="auto_display" class="switch-checkbox" name="' . $this->plugin_name . '[wp_whatsapp_chatbox_auto_display]" value="1" ' . checked('1', $value, false) . ' />';
+        echo '<label for="auto_display" class="switch-label"></label>';
+        echo '</div>';
         echo '<p class="description">' . __('Automatically display the chat widget after page load', 'wp-whatsapp-chatbox') . '</p>';
     }
 
@@ -314,13 +340,18 @@ class WP_WhatsApp_Chatbox_Admin {
         $options = get_option($this->plugin_name);
         $value = isset($options['wp_whatsapp_chatbox_enable_hours']) ? $options['wp_whatsapp_chatbox_enable_hours'] : '0';
         
-        echo '<input type="checkbox" name="' . $this->plugin_name . '[wp_whatsapp_chatbox_enable_hours]" value="1" ' . checked('1', $value, false) . ' />';
+        echo '<div class="switch-wrapper">';
+        echo '<input type="checkbox" id="enable_hours" class="switch-checkbox" name="' . $this->plugin_name . '[wp_whatsapp_chatbox_enable_hours]" value="1" ' . checked('1', $value, false) . ' />';
+        echo '<label for="enable_hours" class="switch-label"></label>';
+        echo '</div>';
         echo '<p class="description">' . __('Enable time-based visibility for the chat widget', 'wp-whatsapp-chatbox') . '</p>';
     }
 
     public function render_business_hours_fields() {
         $options = get_option($this->plugin_name);
         $business_hours = isset($options['wp_whatsapp_chatbox_business_hours']) ? $options['wp_whatsapp_chatbox_business_hours'] : array();
+        $timezone = wp_timezone_string();
+        
         $days = array(
             'monday' => __('Monday', 'wp-whatsapp-chatbox'),
             'tuesday' => __('Tuesday', 'wp-whatsapp-chatbox'),
@@ -332,6 +363,8 @@ class WP_WhatsApp_Chatbox_Admin {
         );
 
         echo '<div class="business-hours-container">';
+        echo '<p class="description">' . sprintf(__('Times are in your site\'s timezone: %s', 'wp-whatsapp-chatbox'), $timezone) . '</p>';
+        
         foreach ($days as $day_key => $day_label) {
             $day_settings = isset($business_hours[$day_key]) ? $business_hours[$day_key] : array();
             $enabled = isset($day_settings['enabled']) ? $day_settings['enabled'] : '0';
@@ -340,10 +373,14 @@ class WP_WhatsApp_Chatbox_Admin {
 
             echo '<div class="business-hours-day">';
             echo '<label class="day-label">' . $day_label . '</label>';
+            echo '<div class="switch-wrapper">';
             echo '<input type="checkbox" 
+                         id="' . $day_key . '_enabled"
+                         class="switch-checkbox day-enabled" 
                          name="' . $this->plugin_name . '[wp_whatsapp_chatbox_business_hours][' . $day_key . '][enabled]" 
-                         value="1" ' . checked('1', $enabled, false) . ' 
-                         class="day-enabled" />';
+                         value="1" ' . checked('1', $enabled, false) . ' />';
+            echo '<label for="' . $day_key . '_enabled" class="switch-label"></label>';
+            echo '</div>';
             echo '<input type="time" 
                          name="' . $this->plugin_name . '[wp_whatsapp_chatbox_business_hours][' . $day_key . '][start]" 
                          value="' . esc_attr($start) . '" 

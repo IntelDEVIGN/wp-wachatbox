@@ -54,7 +54,15 @@
         <div class="wp-whatsapp-chatbox-messages">
             <div class="wp-whatsapp-chatbox-message received">
                 <div class="wp-whatsapp-chatbox-message-content">
-                    <p><?php echo esc_html(get_option('wp_whatsapp_chatbox_welcome_message')); ?></p>
+                    <div class="wp-whatsapp-chatbox-welcome-message">
+                        <?php 
+                        $options = get_option($this->plugin_name);
+                        $welcome_message = isset($options['wp_whatsapp_chatbox_welcome_message']) ? 
+                            nl2br(esc_html($options['wp_whatsapp_chatbox_welcome_message'])) : 
+                            __('¡Hola!, ¿Cómo le podemos ayudar?', 'wp-whatsapp-chatbox');
+                        echo $welcome_message;
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>

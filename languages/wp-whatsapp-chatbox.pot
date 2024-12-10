@@ -136,3 +136,6 @@ msgstr ""
 
 msgid "Sunday"
 msgstr ""
+
+msgid "Times are in your site's timezone: %s"
+msgstr ""

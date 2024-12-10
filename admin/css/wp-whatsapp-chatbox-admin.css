@@ -46,28 +46,163 @@
 }
 
 .business-hours-container {
-    max-width: 600px;
+    max-width: 800px;
+    margin-top: 15px;
 }
 
 .business-hours-day {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
-    gap: 15px;
+    margin-bottom: 15px;
+    gap: 20px;
 }
 
 .day-label {
-    min-width: 100px;
+    min-width: 120px;
+    font-weight: 500;
+    color: #1d2327;
 }
 
 .time-input {
-    width: 100px;
+    width: 150px;
+    height: 35px;
+    padding: 6px 12px;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #2c3338;
+    font-size: 14px;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.time-input:focus {
+    border-color: #00a884;
+    box-shadow: 0 0 0 1px #00a884;
+    outline: none;
 }
 
 .time-separator {
-    margin: 0 10px;
+    margin: 0 15px;
+    color: #50575e;
+    font-size: 14px;
+}
+
+
+/* Time input icon styling */
+
+.time-input::-webkit-calendar-picker-indicator {
+    filter: invert(40%);
 }
 
 .day-enabled {
     margin: 0 !important;
+}
+
+
+/* Switch styles */
+
+.switch-wrapper {
+    display: inline-block;
+    position: relative;
+}
+
+.switch-checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch-label {
+    display: block;
+    width: 48px;
+    height: 24px;
+    background-color: #e9ecef;
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.switch-label:before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+.switch-label:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #ccc;
+    border-radius: 12px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.3s ease;
+}
+
+.switch-checkbox:checked+.switch-label:after {
+    background-color: #00a884;
+}
+
+.switch-checkbox:checked+.switch-label:before {
+    transform: translateX(24px);
+}
+
+
+/* Business hours specific styles */
+
+.business-hours-day .switch-wrapper {
+    margin-right: 15px;
+}
+
+.business-hours-day .switch-label {
+    width: 44px;
+    height: 22px;
+}
+
+.business-hours-day .switch-label:before {
+    width: 18px;
+    height: 18px;
+    top: 2px;
+    left: 2px;
+}
+
+.business-hours-day .switch-checkbox:checked+.switch-label:before {
+    transform: translateX(22px);
+}
+
+.business-hours-day .switch-checkbox:checked+.switch-label:after {
+    background-color: #00a884;
+}
+
+
+/* Focus styles for accessibility */
+
+.switch-checkbox:focus+.switch-label {
+    box-shadow: 0 0 0 2px rgba(0, 168, 132, 0.2);
+}
+
+
+/* Timezone info styling */
+
+.business-hours-container .description {
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background-color: #f0f6fc;
+    border-left: 4px solid #00a884;
+    border-radius: 2px;
 }

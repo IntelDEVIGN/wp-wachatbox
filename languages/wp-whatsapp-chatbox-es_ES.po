@@ -102,3 +102,42 @@ msgstr "Escribe un mensaje"
 #: public/partials/wp-whatsapp-chatbox-public-display.php:69
 msgid "Send message"
 msgstr "Enviar mensaje"
+
+msgid "Business Hours"
+msgstr "Horario de Atención"
+
+msgid "Enable Business Hours"
+msgstr "Activar Horario de Atención"
+
+msgid "Set Business Hours"
+msgstr "Configurar Horario de Atención"
+
+msgid "Configure when the WhatsApp chat widget should be visible based on your business hours."
+msgstr "Configure cuándo debe estar visible el widget de chat de WhatsApp según su horario de atención."
+
+msgid "Enable time-based visibility for the chat widget"
+msgstr "Activar visibilidad basada en horario para el widget de chat"
+
+msgid "Monday"
+msgstr "Lunes"
+
+msgid "Tuesday"
+msgstr "Martes"
+
+msgid "Wednesday"
+msgstr "Miércoles"
+
+msgid "Thursday"
+msgstr "Jueves"
+
+msgid "Friday"
+msgstr "Viernes"
+
+msgid "Saturday"
+msgstr "Sábado"
+
+msgid "Sunday"
+msgstr "Domingo"
+
+msgid "Times are in your site's timezone: %s"
+msgstr "Los horarios están en la zona horaria de su sitio: %s"

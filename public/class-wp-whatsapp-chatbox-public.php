@@ -71,14 +71,18 @@ class WP_WhatsApp_Chatbox_Public {
         // Get plugin options
         $options = get_option($this->plugin_name);
 
-        // Localize script with plugin data
+        // Prepare welcome message - preserve newlines
+        $welcome_message = isset($options['wp_whatsapp_chatbox_welcome_message']) ? 
+            wp_kses($options['wp_whatsapp_chatbox_welcome_message'], array('br' => array())) : 
+            __('¡Hola!, ¿Cómo le podemos ayudar?', 'wp-whatsapp-chatbox');
+        
         wp_localize_script(
             $this->plugin_name,
             'wpWhatsAppChatbox',
             array(
                 'whatsappNumber' => isset($options['wp_whatsapp_chatbox_whatsapp_number']) ? $options['wp_whatsapp_chatbox_whatsapp_number'] : '',
                 'accountName' => isset($options['wp_whatsapp_chatbox_account_name']) ? $options['wp_whatsapp_chatbox_account_name'] : '',
-                'welcomeMessage' => isset($options['wp_whatsapp_chatbox_welcome_message']) ? $options['wp_whatsapp_chatbox_welcome_message'] : '',
+                'welcomeMessage' => nl2br($welcome_message), // Convert newlines to <br> tags
                 'primaryColor' => isset($options['wp_whatsapp_chatbox_primary_color']) ? $options['wp_whatsapp_chatbox_primary_color'] : '#00a884',
                 'displayDelay' => isset($options['wp_whatsapp_chatbox_display_delay']) ? intval($options['wp_whatsapp_chatbox_display_delay']) : 2000,
                 'borderRadius' => isset($options['wp_whatsapp_chatbox_border_radius']) ? intval($options['wp_whatsapp_chatbox_border_radius']) : 15,

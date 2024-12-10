@@ -39,6 +39,7 @@
         chatboxButton.on('click', function(e) {
             e.preventDefault();
             toggleChat(!isVisible);
+            updateWelcomeMessage();
         });
 
         // Close button handler
@@ -99,9 +100,15 @@
                 return true;
             }
 
-            const now = new Date();
-            const currentDay = now.toLocaleDateString('en-US', { weekday: 'lowercase' });
-            const currentTime = now.getHours() * 60 + now.getMinutes();
+            // Create date object in site's timezone
+            const siteTimezone = wpWhatsAppChatbox.timezone;
+            const now = new Date().toLocaleString("en-US", { timeZone: siteTimezone });
+            const nowDate = new Date(now);
+
+            // Get day and time in site's timezone
+            const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            const currentDay = days[nowDate.getDay()];
+            const currentTime = nowDate.getHours() * 60 + nowDate.getMinutes();
 
             const businessHours = wpWhatsAppChatbox.businessHours[currentDay];
 
@@ -128,6 +135,17 @@
 
         // Check every minute
         setInterval(updateWidgetVisibility, 60000);
+
+        // Update welcome message display
+        function updateWelcomeMessage() {
+            const welcomeMessage = $('.wp-whatsapp-chatbox-welcome-message');
+            if (welcomeMessage.length) {
+                welcomeMessage.html(wpWhatsAppChatbox.welcomeMessage);
+            }
+        }
+
+        // Call it initially
+        updateWelcomeMessage();
     });
 
 })(jQuery);
