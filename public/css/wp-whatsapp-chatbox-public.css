@@ -1,7 +1,7 @@
     /**
     * Public styles for WP WhatsApp Chatbox
     */
-
+    
     .wp-whatsapp-chatbox {
         --primary-color: var(--wp-whatsapp-primary-color, #00a884);
         --avatar-border-color: var(--wp-whatsapp-avatar-border-color, #ffffff);
@@ -15,14 +15,14 @@
         font-family: var(--font-family);
     }
     /* Floating Action Button */
-
+    
     .wp-whatsapp-chatbox-button {
         width: 60px;
         height: 60px;
         padding: 0 !important;
         background-color: var(--primary-color);
         border: none;
-        border-radius: 50% !important;
+        border-radius: 50% 50% 50% 8px !important;
         box-shadow: var(--box-shadow);
         cursor: pointer;
         display: flex;
@@ -30,19 +30,28 @@
         justify-content: center;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
+    
     .wp-whatsapp-chatbox-button:hover {
         transform: translateY(-2px);
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.16);
         background-color: #00a884 !important;
     }
-
+    
     .wp-whatsapp-icon {
-        width: 30px;
-        height: 30px;
+        width: 60px;
+        height: 60px;
+    }
+    
+    .wp-whatsapp-icon .cls-1 {
+        fill: #fff;
+        fill-rule: evenodd;
+    }
+    
+    .wp-whatsapp-icon .cls-2 {
+        fill: #25d366;
     }
     /* Chat Box Popup */
-
+    
     .wp-whatsapp-chatbox-popup {
         position: absolute;
         bottom: 80px;
@@ -58,14 +67,14 @@
         transform-origin: bottom left;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
+    
     .wp-whatsapp-chatbox-popup[aria-hidden="false"] {
         display: block;
         opacity: 1;
         transform: translateY(0) scale(1);
     }
     /* Header */
-
+    
     .wp-whatsapp-chatbox-header {
         display: flex;
         align-items: center;
@@ -75,7 +84,7 @@
         color: #fff;
         position: relative;
     }
-
+    
     .wp-whatsapp-chatbox-avatar {
         width: 55px;
         height: 55px;
@@ -83,7 +92,7 @@
         position: relative;
         margin-right: 15px;
     }
-
+    
     .wp-whatsapp-chatbox-avatar::before {
         content: '';
         position: absolute;
@@ -95,7 +104,7 @@
         border-radius: 50%;
         z-index: 1;
     }
-
+    
     .wp-whatsapp-chatbox-avatar::after {
         content: '';
         position: absolute;
@@ -107,7 +116,7 @@
         border-radius: 50%;
         z-index: 2;
     }
-
+    
     .wp-whatsapp-chatbox-avatar img {
         width: 100%;
         height: 100%;
@@ -117,18 +126,18 @@
         position: relative;
         z-index: 3;
     }
-
+    
     .wp-whatsapp-chatbox-header-info {
         flex: 1;
     }
-
+    
     .wp-whatsapp-chatbox-title {
         margin: 0;
         font-size: 16px;
         font-weight: 600;
         letter-spacing: 0.2px;
     }
-
+    
     .wp-whatsapp-chatbox-status {
         margin: 4px 0 0;
         font-size: 13px;
@@ -136,7 +145,7 @@
         display: flex;
         align-items: center;
     }
-
+    
     .wp-whatsapp-chatbox-status::before {
         content: '';
         display: inline-block;
@@ -146,7 +155,7 @@
         border-radius: 50%;
         margin-right: 6px;
     }
-
+    
     .wp-whatsapp-chatbox-close {
         background: none;
         border: none;
@@ -165,12 +174,12 @@
         opacity: 0.8;
         transition: opacity 0.2s ease;
     }
-
+    
     .wp-whatsapp-chatbox-close:hover {
         opacity: 1;
     }
     /* Messages */
-
+    
     .wp-whatsapp-chatbox-messages {
         padding: 20px;
         max-height: 300px;
@@ -178,12 +187,12 @@
         background: #efeae2;
         background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm63 31c1.657 0 3-1.343 3-3s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM34 90c1.657 0 3-1.343 3-3s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.657 0 3-1.343 3-3s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
     }
-
+    
     .wp-whatsapp-chatbox-message {
         margin-bottom: 15px;
         max-width: 85%;
     }
-
+    
     .wp-whatsapp-chatbox-message.received {
         background: #fff;
         padding: 12px 16px;
@@ -191,14 +200,14 @@
         position: relative;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
     }
-
+    
     .wp-whatsapp-chatbox-message p {
         margin: 0;
         font-size: 14px;
         line-height: 1.4;
         color: #111b21;
     }
-
+    
     .wp-whatsapp-chatbox-time {
         font-size: 11px;
         color: #667781;
@@ -206,13 +215,13 @@
         display: block;
     }
     /* Input Area */
-
+    
     .wp-whatsapp-chatbox-footer {
         padding: 15px;
         background: #f0f2f5;
         border-top: 1px solid rgba(0, 0, 0, 0.05);
     }
-
+    
     .wp-whatsapp-chatbox-input-form {
         display: flex;
         align-items: center;
@@ -221,7 +230,7 @@
         padding: 8px 12px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     }
-
+    
     .wp-whatsapp-chatbox-input {
         flex: 1;
         border: none;
@@ -230,15 +239,15 @@
         background: transparent;
         color: #111b21;
     }
-
+    
     .wp-whatsapp-chatbox-input:focus {
         outline: none;
     }
-
+    
     .wp-whatsapp-chatbox-input::placeholder {
         color: #8696a0;
     }
-
+    
     .wp-whatsapp-chatbox-send {
         background-color: transparent;
         border: none;
@@ -250,18 +259,18 @@
         justify-content: center;
         transition: opacity 0.2s ease;
     }
-
+    
     .wp-whatsapp-chatbox-send svg {
         width: 24px;
         height: 24px;
         fill: var(--primary-color);
     }
-
+    
     .wp-whatsapp-chatbox-send:hover {
         opacity: 0.8;
     }
     /* Responsive Design */
-
+    
     @media screen and (max-width: 480px) {
         .wp-whatsapp-chatbox-popup {
             width: calc(100vw - 40px);
