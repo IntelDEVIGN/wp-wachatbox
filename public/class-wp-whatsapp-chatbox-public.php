@@ -1,7 +1,7 @@
 <?php
 /**
  * The public-facing functionality of the plugin.
- * 
+ *
  * Handles all front-end operations including:
  * - Widget rendering
  * - Asset loading
@@ -32,6 +32,7 @@ class WP_WhatsApp_Chatbox_Public {
      * @var      string    $version    The current version of this plugin.
      */
     private $version;
+    private $options;
 
     /**
      * Initialize the class and set its properties.
@@ -43,6 +44,7 @@ class WP_WhatsApp_Chatbox_Public {
     public function __construct($plugin_name, $version) {
         $this->plugin_name = $plugin_name;
         $this->version = $version;
+        $this->options = get_option($this->plugin_name);
     }
 
     /**
@@ -54,7 +56,7 @@ class WP_WhatsApp_Chatbox_Public {
         wp_enqueue_style(
             $this->plugin_name,
             plugin_dir_url(__FILE__) . 'css/wp-whatsapp-chatbox-public.css',
-            array(),
+            [],
             $this->version,
             'all'
         );
@@ -71,19 +73,19 @@ class WP_WhatsApp_Chatbox_Public {
         wp_enqueue_script(
             $this->plugin_name,
             plugin_dir_url(__FILE__) . 'js/wp-whatsapp-chatbox-public.js',
-            array('jquery'),
+            ['jquery'],
             $this->version,
             true
         );
 
         // Get plugin options
-        $options = get_option($this->plugin_name);
+        $options = $this->options;
 
         // Prepare welcome message - preserve newlines
-        $welcome_message = isset($options['wp_whatsapp_chatbox_welcome_message']) ? 
-            wp_kses($options['wp_whatsapp_chatbox_welcome_message'], array('br' => array())) : 
+        $welcome_message = isset($options['wp_whatsapp_chatbox_welcome_message']) ?
+            wp_kses($options['wp_whatsapp_chatbox_welcome_message'], array('br' => array())) :
             __('¡Hola!, ¿Cómo le podemos ayudar?', 'wp-whatsapp-chatbox');
-        
+
         wp_localize_script(
             $this->plugin_name,
             'wpWhatsAppChatbox',
@@ -96,9 +98,9 @@ class WP_WhatsApp_Chatbox_Public {
                 'borderRadius' => isset($options['wp_whatsapp_chatbox_border_radius']) ? intval($options['wp_whatsapp_chatbox_border_radius']) : 15,
                 'autoShowEnabled' => isset($options['wp_whatsapp_chatbox_auto_display']) && $options['wp_whatsapp_chatbox_auto_display'] === '1',
                 'pluginUrl' => plugin_dir_url(__FILE__),
-                'businessHoursEnabled' => isset($options['wp_whatsapp_chatbox_enable_hours']) ? 
+                'businessHoursEnabled' => isset($options['wp_whatsapp_chatbox_enable_hours']) ?
                                         $options['wp_whatsapp_chatbox_enable_hours'] === '1' : false,
-                'businessHours' => isset($options['wp_whatsapp_chatbox_business_hours']) ? 
+                'businessHours' => isset($options['wp_whatsapp_chatbox_business_hours']) ?
                                  $options['wp_whatsapp_chatbox_business_hours'] : array(),
                 'timezone' => wp_timezone_string()
             )

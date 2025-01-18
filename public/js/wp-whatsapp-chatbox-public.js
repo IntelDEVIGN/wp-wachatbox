@@ -79,22 +79,39 @@
             }
         });
 
-        // Auto-show when reaching footer
+        // Auto-show logic with cookie
         if (wpWhatsAppChatbox.autoShowEnabled) {
-            let hasShown = false;
-            const footer = $('footer, .footer, #footer').first();
+            // Check if the cookie exists
+            if (!getCookie('wp_whatsapp_chatbox_session')) {
+                let hasShown = false;
+                const footer = $('footer, .footer, #footer').first();
 
-            $(window).on('scroll', function() {
-                if (!hasShown && footer.length) {
-                    const footerTop = footer.offset().top;
-                    const scrollPosition = $(window).scrollTop() + $(window).height();
+                $(window).on('scroll', function() {
+                    if (!hasShown && footer.length) {
+                        const footerTop = footer.offset().top;
+                        const scrollPosition = $(window).scrollTop() + $(window).height();
 
-                    if (scrollPosition >= footerTop) {
-                        hasShown = true;
-                        toggleChat(true);
+                        if (scrollPosition >= footerTop) {
+                            hasShown = true;
+                            toggleChat(true);
+                            // Set a session cookie to prevent auto-showing again
+                            document.cookie = "wp_whatsapp_chatbox_session=true; path=/";
+                        }
                     }
-                }
-            });
+                });
+            }
+        }
+
+        /**
+         * Gets a cookie by name
+         * 
+         * @param {string} name The name of the cookie
+         * @returns {string|null} The cookie value or null if not found
+         */
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
         }
 
         // Handle escape key
@@ -126,10 +143,12 @@
 
             const businessHours = wpWhatsAppChatbox.businessHours[currentDay];
 
-            if (!businessHours || !businessHours.enabled) {
+            // First check if the current day is enabled and has business hours set
+            if (!businessHours || businessHours.enabled !== '1') {
                 return false;
             }
 
+            // Then check if current time is within business hours
             const [startHour, startMinute] = businessHours.start.split(':').map(Number);
             const [endHour, endMinute] = businessHours.end.split(':').map(Number);
 

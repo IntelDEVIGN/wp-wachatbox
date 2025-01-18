@@ -40,3 +40,7 @@ wp-content/wp-cache-config.php
 Thumbs.db
 *.log
 .env
+.claude/
+CLAUDE.md
+.gemini/
+GEMINI.md

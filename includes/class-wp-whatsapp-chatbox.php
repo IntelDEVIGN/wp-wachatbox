@@ -107,9 +107,9 @@ class WP_WhatsApp_Chatbox {
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
         $this->loader->add_action('wp_footer', $plugin_public, 'render_chat_widget');
-        
+
         // Register shortcode
-        add_shortcode('wa_chatbox', array($plugin_public, 'render_chat_widget'));
+        add_shortcode('wa_chatbox', [$plugin_public, 'render_chat_widget']);
     }
 
     /**

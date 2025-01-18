@@ -3,7 +3,7 @@
     */
     
     .wp-whatsapp-chatbox {
-        --primary-color: var(--wp-whatsapp-primary-color, #00a884);
+        --primary-color: var(--wp-whatsapp-primary-color, #25D366);
         --avatar-border-color: var(--wp-whatsapp-avatar-border-color, #ffffff);
         --font-family: var(--wp-whatsapp-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif);
         --border-radius: var(--wp-whatsapp-border-radius, 15px);

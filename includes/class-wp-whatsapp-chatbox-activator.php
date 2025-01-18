@@ -16,21 +16,21 @@ class WP_WhatsApp_Chatbox_Activator {
      */
     public static function activate() {
         $default_options = array(
-            'whatsapp_number' => '',
-            'account_name' => get_bloginfo('name'),
-            'welcome_message' => '¡Hola!, ¿Cómo le podemos ayudar?',
-            'auto_display' => true,
-            'display_delay' => 2000,
-            'primary_color' => '#25D366',
-            'font_family' => 'inherit',
-            'border_radius' => '15',
-            'box_shadow' => '0 2px 15px rgba(0,0,0,0.1)',
+            'wp_whatsapp_chatbox_whatsapp_number' => '',
+            'wp_whatsapp_chatbox_account_name' => get_bloginfo('name'),
+            'wp_whatsapp_chatbox_welcome_message' => '¡Hola!, ¿Cómo le podemos ayudar?',
+            'wp_whatsapp_chatbox_auto_display' => '1',
+            'wp_whatsapp_chatbox_display_delay' => 2000,
+            'wp_whatsapp_chatbox_primary_color' => '#25D366',
+            'wp_whatsapp_chatbox_border_radius' => '15',
+            'wp_whatsapp_chatbox_avatar' => '',
+            'wp_whatsapp_chatbox_avatar_border_color' => '#ffffff',
+            'wp_whatsapp_chatbox_enable_hours' => '0',
+            'wp_whatsapp_chatbox_business_hours' => array(),
         );
 
-        foreach ($default_options as $key => $value) {
-            if (get_option('wp_whatsapp_chatbox_' . $key) === false) {
-                add_option('wp_whatsapp_chatbox_' . $key, $value);
-            }
+        if (get_option('wp-whatsapp-chatbox') === false) {
+            add_option('wp-whatsapp-chatbox', $default_options);
         }
     }
 }

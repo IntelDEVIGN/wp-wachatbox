@@ -21,22 +21,25 @@
         <!-- Header -->
         <?php
         $options = get_option('wp-whatsapp-chatbox');
-        $avatar_url = isset($options['wp_whatsapp_chatbox_avatar']) && !empty($options['wp_whatsapp_chatbox_avatar']) 
-            ? $options['wp_whatsapp_chatbox_avatar'] 
+        $disable_avatar = isset($options['wp_whatsapp_chatbox_disable_avatar']) && $options['wp_whatsapp_chatbox_disable_avatar'] === '1';
+        $avatar_url = isset($options['wp_whatsapp_chatbox_avatar']) && !empty($options['wp_whatsapp_chatbox_avatar'])
+            ? $options['wp_whatsapp_chatbox_avatar']
             : plugins_url('images/default-avatar.png', dirname(__FILE__));
-        $account_name = isset($options['wp_whatsapp_chatbox_account_name']) 
-            ? $options['wp_whatsapp_chatbox_account_name'] 
+        $account_name = isset($options['wp_whatsapp_chatbox_account_name'])
+            ? $options['wp_whatsapp_chatbox_account_name']
             : get_bloginfo('name');
-        $avatar_border_color = isset($options['wp_whatsapp_chatbox_avatar_border_color']) 
-            ? $options['wp_whatsapp_chatbox_avatar_border_color'] 
+        $avatar_border_color = isset($options['wp_whatsapp_chatbox_avatar_border_color'])
+            ? $options['wp_whatsapp_chatbox_avatar_border_color']
             : '#ffffff';
         ?>
         <div class="wp-whatsapp-chatbox-header" style="--wp-whatsapp-avatar-border-color: <?php echo esc_attr($avatar_border_color); ?>">
+            <?php if (!$disable_avatar) : ?>
             <div class="wp-whatsapp-chatbox-avatar">
-                <img src="<?php echo esc_url($avatar_url); ?>" 
+                <img src="<?php echo esc_url($avatar_url); ?>"
                      alt="<?php echo esc_attr($account_name); ?>"
                      width="45" height="45">
             </div>
+            <?php endif; ?>
             <div class="wp-whatsapp-chatbox-header-info">
                 <h3 class="wp-whatsapp-chatbox-title">
                     <?php echo esc_html($account_name); ?>
@@ -55,10 +58,10 @@
             <div class="wp-whatsapp-chatbox-message received">
                 <div class="wp-whatsapp-chatbox-message-content">
                     <div class="wp-whatsapp-chatbox-welcome-message">
-                        <?php 
+                        <?php
                         $options = get_option($this->plugin_name);
-                        $welcome_message = isset($options['wp_whatsapp_chatbox_welcome_message']) ? 
-                            nl2br(esc_html($options['wp_whatsapp_chatbox_welcome_message'])) : 
+                        $welcome_message = isset($options['wp_whatsapp_chatbox_welcome_message']) ?
+                            nl2br(esc_html($options['wp_whatsapp_chatbox_welcome_message'])) :
                             __('¡Hola!, ¿Cómo le podemos ayudar?', 'wp-whatsapp-chatbox');
                         echo $welcome_message;
                         ?>
@@ -70,8 +73,8 @@
         <!-- Input Area -->
         <div class="wp-whatsapp-chatbox-footer">
             <form class="wp-whatsapp-chatbox-input-form" action="#" method="post">
-                <input type="text" 
-                       class="wp-whatsapp-chatbox-input" 
+                <input type="text"
+                       class="wp-whatsapp-chatbox-input"
                        placeholder="<?php esc_attr_e('Type a message...', 'wp-whatsapp-chatbox'); ?>"
                        aria-label="<?php esc_attr_e('Type a message', 'wp-whatsapp-chatbox'); ?>">
                 <button type="submit" class="wp-whatsapp-chatbox-send" aria-label="<?php esc_attr_e('Send message', 'wp-whatsapp-chatbox'); ?>">
