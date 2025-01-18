@@ -126,10 +126,12 @@
 
             const businessHours = wpWhatsAppChatbox.businessHours[currentDay];
 
-            if (!businessHours || !businessHours.enabled) {
+            // First check if the current day is enabled and has business hours set
+            if (!businessHours || businessHours.enabled !== '1') {
                 return false;
             }
 
+            // Then check if current time is within business hours
             const [startHour, startMinute] = businessHours.start.split(':').map(Number);
             const [endHour, endMinute] = businessHours.end.split(':').map(Number);
 
