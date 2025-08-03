@@ -1,27 +1,69 @@
-# Copyright (C) 2024 WP WhatsApp Chatbox
-# This file is distributed under the same license as the WP WhatsApp Chatbox package.
+# Copyright (C) 2025 Adalberto H. Vega
+# This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP WhatsApp Chatbox 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-whatsapp-chatbox\n"
-"POT-Creation-Date: 2024-01-22 12:00:00+00:00\n"
+"Project-Id-Version: WP WhatsApp Chatbox 1.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wa-chatbox\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2024-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"X-Generator: WP-CLI 2.8.1\n"
+"POT-Creation-Date: 2025-08-03T21:40:42+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: wp-whatsapp-chatbox\n"
 
-#: admin/class-wp-whatsapp-chatbox-admin.php:123
-msgid "WhatsApp Settings"
+#. Plugin Name of the plugin
+#: wp-whatsapp-chatbox.php
+msgid "WP WhatsApp Chatbox"
 msgstr ""
 
-#: admin/class-wp-whatsapp-chatbox-admin.php:130
+#. Plugin URI of the plugin
+#: wp-whatsapp-chatbox.php
+msgid "https://github.com/ahvega/wp-wachatbox"
+msgstr ""
+
+#. Description of the plugin
+#: wp-whatsapp-chatbox.php
+msgid "Add a beautiful WhatsApp chat widget to your WordPress site with business hours management and extensive customization options."
+msgstr ""
+
+#. Author of the plugin
+#: wp-whatsapp-chatbox.php
+msgid "Adalberto H. Vega"
+msgstr ""
+
+#. Author URI of the plugin
+#: wp-whatsapp-chatbox.php
+msgid "https://github.com/ahvega"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:78
+msgid "Settings"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:93
+msgid "General Settings"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:101
+msgid "Profile Avatar"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:110
+msgid "Avatar Border Color"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:119
+msgid "Disable Avatar"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:128
 msgid "WhatsApp Number"
 msgstr ""
 
-#: admin/class-wp-whatsapp-chatbox-admin.php:138
+#: admin/class-wp-whatsapp-chatbox-admin.php:137
 msgid "Account Name"
 msgstr ""
 
@@ -29,113 +71,193 @@ msgstr ""
 msgid "Welcome Message"
 msgstr ""
 
-#: admin/class-wp-whatsapp-chatbox-admin.php:154
-msgid "Avatar Image"
-msgstr ""
-
-#: admin/class-wp-whatsapp-chatbox-admin.php:162
-msgid "Avatar Border Color"
-msgstr ""
-
-#: admin/class-wp-whatsapp-chatbox-admin.php:170
+#: admin/class-wp-whatsapp-chatbox-admin.php:155
 msgid "Primary Color"
 msgstr ""
 
-#: admin/class-wp-whatsapp-chatbox-admin.php:216
-msgid "Select the border color for the avatar image"
+#: admin/class-wp-whatsapp-chatbox-admin.php:164
+msgid "Auto Display"
 msgstr ""
 
-#: admin/class-wp-whatsapp-chatbox-admin.php:224
-msgid "Enter your WhatsApp number with country code (e.g., +1234567890)"
+#: admin/class-wp-whatsapp-chatbox-admin.php:173
+msgid "Display Delay (ms)"
 msgstr ""
 
-#: admin/class-wp-whatsapp-chatbox-admin.php:232
-msgid "Enter the name to display in the chat"
+#: admin/class-wp-whatsapp-chatbox-admin.php:182
+msgid "Border Radius (px)"
 msgstr ""
 
-#: admin/class-wp-whatsapp-chatbox-admin.php:240
-msgid "Enter the welcome message to show in the chat"
-msgstr ""
-
-#: admin/class-wp-whatsapp-chatbox-admin.php:248
-msgid "Upload an avatar image"
-msgstr ""
-
-#: admin/class-wp-whatsapp-chatbox-admin.php:256
-msgid "Select the primary color for the chat box"
-msgstr ""
-
-#: admin/class-wp-whatsapp-chatbox-admin.php:264
-msgid "Choose Image"
-msgstr ""
-
-#: admin/class-wp-whatsapp-chatbox-admin.php:265
-msgid "Remove Image"
-msgstr ""
-
-#: public/partials/wp-whatsapp-chatbox-public-display.php:10
-msgid "WhatsApp Chat Widget"
-msgstr ""
-
-#: public/partials/wp-whatsapp-chatbox-public-display.php:12
-msgid "Open WhatsApp Chat"
-msgstr ""
-
-#: public/partials/wp-whatsapp-chatbox-public-display.php:39
-msgid "Online"
-msgstr ""
-
-#: public/partials/wp-whatsapp-chatbox-public-display.php:42
-msgid "Close chat"
-msgstr ""
-
-#: public/partials/wp-whatsapp-chatbox-public-display.php:67
-msgid "Type a message..."
-msgstr ""
-
-#: public/partials/wp-whatsapp-chatbox-public-display.php:68
-msgid "Type a message"
-msgstr ""
-
-#: public/partials/wp-whatsapp-chatbox-public-display.php:69
-msgid "Send message"
-msgstr ""
-
+#: admin/class-wp-whatsapp-chatbox-admin.php:191
 msgid "Business Hours"
 msgstr ""
 
+#: admin/class-wp-whatsapp-chatbox-admin.php:199
 msgid "Enable Business Hours"
 msgstr ""
 
+#: admin/class-wp-whatsapp-chatbox-admin.php:208
 msgid "Set Business Hours"
 msgstr ""
 
+#: admin/class-wp-whatsapp-chatbox-admin.php:233
+msgid "Security check failed. Please try again."
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:247
+msgid "Invalid WhatsApp number format. Please use international format (e.g., +1234567890)"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:265
+#: admin/class-wp-whatsapp-chatbox-admin.php:399
+msgid "¡Hola!, ¿Cómo le podemos ayudar?"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:290
+msgid "Invalid avatar URL provided."
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:305
+msgid "Avatar must be from your media library or a trusted image URL."
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:344
+msgid "Configure your WhatsApp chat widget settings below."
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:358
+msgid "Select Image"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:359
+msgid "Remove Image"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:360
+msgid "Recommended size: 100x100 pixels. The image will be displayed as a circle."
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:368
+msgid "Select the border color for the avatar image"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:379
+msgid "Hide the avatar in the chat widget"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:386
+msgid "Enter your WhatsApp number with country code (e.g., 14155552671)"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:404
+msgid "Enter the welcome message to show in the chat. You can use line breaks."
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:421
+msgid "Automatically display the chat widget after page load"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:428
+msgid "Delay in milliseconds before displaying the chat widget"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:435
+msgid "Border radius in pixels for the chat widget"
+msgstr ""
+
+#: admin/class-wp-whatsapp-chatbox-admin.php:439
 msgid "Configure when the WhatsApp chat widget should be visible based on your business hours."
 msgstr ""
 
+#: admin/class-wp-whatsapp-chatbox-admin.php:450
 msgid "Enable time-based visibility for the chat widget"
 msgstr ""
 
+#: admin/class-wp-whatsapp-chatbox-admin.php:466
 msgid "Monday"
 msgstr ""
 
+#: admin/class-wp-whatsapp-chatbox-admin.php:467
 msgid "Tuesday"
 msgstr ""
 
+#: admin/class-wp-whatsapp-chatbox-admin.php:468
 msgid "Wednesday"
 msgstr ""
 
+#: admin/class-wp-whatsapp-chatbox-admin.php:469
 msgid "Thursday"
 msgstr ""
 
+#: admin/class-wp-whatsapp-chatbox-admin.php:470
 msgid "Friday"
 msgstr ""
 
+#: admin/class-wp-whatsapp-chatbox-admin.php:471
 msgid "Saturday"
 msgstr ""
 
+#: admin/class-wp-whatsapp-chatbox-admin.php:472
 msgid "Sunday"
 msgstr ""
 
+#: admin/class-wp-whatsapp-chatbox-admin.php:476
 msgid "Times are in your site's timezone: %s"
+msgstr ""
+
+#: admin/partials/wp-whatsapp-chatbox-admin-display.php:18
+msgid "Save Settings"
+msgstr ""
+
+#: admin/partials/wp-whatsapp-chatbox-admin-display.php:24
+msgid "Shortcode Usage"
+msgstr ""
+
+#: admin/partials/wp-whatsapp-chatbox-admin-display.php:26
+msgid "Use this shortcode to display the WhatsApp chat widget in any post or page:"
+msgstr ""
+
+#: includes/class-wp-whatsapp-chatbox-activator.php:22
+#: public/class-wp-whatsapp-chatbox-public.php:84
+#: public/partials/wp-whatsapp-chatbox-public-display.php:80
+msgid "Hello! How can we help you?"
+msgstr ""
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:11
+msgid "WhatsApp Chat Widget"
+msgstr ""
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:14
+msgid "Open WhatsApp Chat"
+msgstr ""
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:26
+msgid "Click to start a WhatsApp conversation with us"
+msgstr ""
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:63
+msgid "Online"
+msgstr ""
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:66
+msgid "Close chat"
+msgstr ""
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:94
+msgid "Type a message..."
+msgstr ""
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:95
+msgid "Type a message"
+msgstr ""
+
+#: public/partials/wp-whatsapp-chatbox-public-display.php:96
+msgid "Send message"
+msgstr ""
+
+#: wp-whatsapp-chatbox.php:34
+msgid "WP WhatsApp Chatbox requires WordPress 5.0 or higher."
+msgstr ""
+
+#: wp-whatsapp-chatbox.php:43
+msgid "WP WhatsApp Chatbox requires PHP 7.4 or higher."
 msgstr ""
