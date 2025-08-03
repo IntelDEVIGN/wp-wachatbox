@@ -61,6 +61,8 @@ class WP_WhatsApp_Chatbox {
     private function load_dependencies() {
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-wp-whatsapp-chatbox-loader.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-wp-whatsapp-chatbox-i18n.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-wp-whatsapp-chatbox-settings.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-wp-whatsapp-chatbox-logger.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-wp-whatsapp-chatbox-admin.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-wp-whatsapp-chatbox-public.php';
 

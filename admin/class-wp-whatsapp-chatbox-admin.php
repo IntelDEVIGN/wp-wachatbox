@@ -20,10 +20,8 @@ class WP_WhatsApp_Chatbox_Admin {
     public function __construct($plugin_name, $version) {
         $this->plugin_name = $plugin_name;
         $this->version = $version;
-
-        add_action('admin_menu', [$this, 'add_plugin_admin_menu']);
-        add_action('admin_init', [$this, 'register_settings']);
-        add_filter('plugin_action_links_' . $this->plugin_name . '/' . $this->plugin_name . '.php', [$this, 'add_action_links']);
+        // Hooks are now registered through the loader in the main class
+        // Removed duplicate hook registration to prevent conflicts
     }
 
     public function enqueue_styles($hook) {
@@ -222,10 +220,37 @@ class WP_WhatsApp_Chatbox_Admin {
      * @return array        The sanitized output array
      */
     public function validate_settings($input) {
+        // Verify nonce for CSRF protection
+        if (!isset($_POST[$this->plugin_name . '_nonce']) || 
+            !wp_verify_nonce($_POST[$this->plugin_name . '_nonce'], $this->plugin_name . '_settings_nonce')) {
+            WP_WhatsApp_Chatbox_Logger::log_security_event('nonce_verification_failed', [
+                'action' => 'settings_save',
+                'nonce_present' => isset($_POST[$this->plugin_name . '_nonce'])
+            ]);
+            add_settings_error(
+                $this->plugin_name,
+                'nonce_failed',
+                __('Security check failed. Please try again.', 'wp-whatsapp-chatbox'),
+                'error'
+            );
+            return get_option($this->plugin_name, []);
+        }
+
         $valid = [];
 
-        // Validate WhatsApp Number
-        $valid['wp_whatsapp_chatbox_whatsapp_number'] = sanitize_text_field($input['wp_whatsapp_chatbox_whatsapp_number']);
+        // Validate WhatsApp Number with enhanced security
+        $phone = preg_replace('/[^\d+]/', '', $input['wp_whatsapp_chatbox_whatsapp_number']);
+        if (!empty($phone) && !preg_match('/^\+?[1-9]\d{1,14}$/', $phone)) {
+            add_settings_error(
+                $this->plugin_name,
+                'invalid_phone',
+                __('Invalid WhatsApp number format. Please use international format (e.g., +1234567890)', 'wp-whatsapp-chatbox'),
+                'error'
+            );
+            $valid['wp_whatsapp_chatbox_whatsapp_number'] = '';
+        } else {
+            $valid['wp_whatsapp_chatbox_whatsapp_number'] = $phone;
+        }
 
         // Validate Account Name
         $valid['wp_whatsapp_chatbox_account_name'] = sanitize_text_field($input['wp_whatsapp_chatbox_account_name']);
@@ -254,8 +279,38 @@ class WP_WhatsApp_Chatbox_Admin {
         $border_radius = absint($input['wp_whatsapp_chatbox_border_radius']);
         $valid['wp_whatsapp_chatbox_border_radius'] = $border_radius >= 0 ? $border_radius : 15;
 
-        // Validate Avatar
-        $valid['wp_whatsapp_chatbox_avatar'] = esc_url_raw($input['wp_whatsapp_chatbox_avatar']);
+        // Validate Avatar with enhanced security
+        $avatar_url = esc_url_raw($input['wp_whatsapp_chatbox_avatar']);
+        if (!empty($avatar_url)) {
+            // Check if URL is valid and potentially from WordPress media library
+            if (!wp_http_validate_url($avatar_url)) {
+                add_settings_error(
+                    $this->plugin_name,
+                    'invalid_avatar_url',
+                    __('Invalid avatar URL provided.', 'wp-whatsapp-chatbox'),
+                    'error'
+                );
+                $valid['wp_whatsapp_chatbox_avatar'] = '';
+            } else {
+                // Additional security: only allow certain domains or media library URLs
+                $site_url = get_site_url();
+                if (strpos($avatar_url, $site_url) === 0 || 
+                    filter_var($avatar_url, FILTER_VALIDATE_URL) && 
+                    in_array(pathinfo($avatar_url, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+                    $valid['wp_whatsapp_chatbox_avatar'] = $avatar_url;
+                } else {
+                    add_settings_error(
+                        $this->plugin_name,
+                        'unsafe_avatar_url',
+                        __('Avatar must be from your media library or a trusted image URL.', 'wp-whatsapp-chatbox'),
+                        'error'
+                    );
+                    $valid['wp_whatsapp_chatbox_avatar'] = '';
+                }
+            }
+        } else {
+            $valid['wp_whatsapp_chatbox_avatar'] = '';
+        }
 
         // Validate Avatar Border Color
         $valid['wp_whatsapp_chatbox_avatar_border_color'] = sanitize_hex_color($input['wp_whatsapp_chatbox_avatar_border_color']);

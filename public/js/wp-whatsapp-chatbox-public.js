@@ -6,11 +6,14 @@
     'use strict';
 
     $(document).ready(function() {
-        const chatbox = $('#wp-whatsapp-chatbox');
-        const chatboxPopup = $('.wp-whatsapp-chatbox-popup');
-        const chatboxButton = $('.wp-whatsapp-chatbox-button');
-        const chatboxClose = $('.wp-whatsapp-chatbox-close');
-        const chatboxForm = $('.wp-whatsapp-chatbox-input-form');
+        // Cache jQuery selectors for better performance
+        const $chatbox = $('#wp-whatsapp-chatbox');
+        const $chatboxPopup = $('.wp-whatsapp-chatbox-popup');
+        const $chatboxButton = $('.wp-whatsapp-chatbox-button');
+        const $chatboxClose = $('.wp-whatsapp-chatbox-close');
+        const $chatboxForm = $('.wp-whatsapp-chatbox-input-form');
+        const $window = $(window);
+        const $document = $(document);
         let isVisible = false;
 
         /**
@@ -21,44 +24,48 @@
          */
         function toggleChat(show) {
             isVisible = show;
-            chatboxPopup.attr('aria-hidden', !show);
+            $chatboxPopup.attr('aria-hidden', !show);
 
             if (show) {
-                chatboxPopup.css('display', 'block');
-                // Use setTimeout to ensure the display: block takes effect before animation
-                setTimeout(() => {
-                    chatboxPopup.css({
+                $chatboxPopup.css('display', 'block');
+                // Use requestAnimationFrame for smoother animations
+                requestAnimationFrame(() => {
+                    $chatboxPopup.css({
                         'opacity': '1',
                         'transform': 'translateY(0) scale(1)'
                     });
-                }, 10);
+                });
+                // Set button expanded state for accessibility
+                $chatboxButton.attr('aria-expanded', 'true');
             } else {
-                chatboxPopup.css({
+                $chatboxPopup.css({
                     'opacity': '0',
                     'transform': 'translateY(20px) scale(0.9)'
                 });
                 // Wait for transition to complete before hiding
                 setTimeout(() => {
-                    chatboxPopup.css('display', 'none');
+                    $chatboxPopup.css('display', 'none');
                 }, 300);
+                // Set button expanded state for accessibility
+                $chatboxButton.attr('aria-expanded', 'false');
             }
         }
 
         // Button click handler
-        chatboxButton.on('click', function(e) {
+        $chatboxButton.on('click', function(e) {
             e.preventDefault();
             toggleChat(!isVisible);
             updateWelcomeMessage();
         });
 
         // Close button handler
-        chatboxClose.on('click', function(e) {
+        $chatboxClose.on('click', function(e) {
             e.preventDefault();
             toggleChat(false);
         });
 
         // Form submit handler
-        chatboxForm.on('submit', function(e) {
+        $chatboxForm.on('submit', function(e) {
             e.preventDefault();
             const input = $(this).find('.wp-whatsapp-chatbox-input');
             const message = input.val().trim();
@@ -73,32 +80,41 @@
         });
 
         // Click outside to close
-        $(document).on('click', function(e) {
+        $document.on('click', function(e) {
             if (isVisible && !$(e.target).closest('.wp-whatsapp-chatbox').length) {
                 toggleChat(false);
             }
         });
 
-        // Auto-show logic with cookie
-        if (wpWhatsAppChatbox.autoShowEnabled) {
-            // Check if the cookie exists
-            if (!getCookie('wp_whatsapp_chatbox_session')) {
-                let hasShown = false;
-                const footer = $('footer, .footer, #footer').first();
+        // Auto-show logic with cookie and throttling
+        if (wpWhatsAppChatbox.autoShowEnabled && !getCookie('wp_whatsapp_chatbox_session')) {
+            let hasShown = false;
+            let ticking = false;
+            const $footer = $('footer, .footer, #footer').first();
 
-                $(window).on('scroll', function() {
-                    if (!hasShown && footer.length) {
-                        const footerTop = footer.offset().top;
-                        const scrollPosition = $(window).scrollTop() + $(window).height();
+            // Throttled scroll handler for better performance
+            function handleScroll() {
+                if (!ticking && !hasShown && $footer.length) {
+                    requestAnimationFrame(function() {
+                        const footerTop = $footer.offset().top;
+                        const scrollPosition = $window.scrollTop() + $window.height();
 
                         if (scrollPosition >= footerTop) {
                             hasShown = true;
                             toggleChat(true);
-                            // Set a session cookie to prevent auto-showing again
-                            document.cookie = "wp_whatsapp_chatbox_session=true; path=/";
+                            // Set a secure session cookie to prevent auto-showing again
+                            const isSecure = window.location.protocol === 'https:' ? '; Secure' : '';
+                            document.cookie = "wp_whatsapp_chatbox_session=true; path=/; SameSite=Strict" + isSecure;
+                            // Remove scroll handler after use for better performance
+                            $window.off('scroll', handleScroll);
                         }
-                    }
-                });
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }
+
+            $window.on('scroll', handleScroll);
             }
         }
 
@@ -166,23 +182,93 @@
          */
         function updateWidgetVisibility() {
             const shouldShow = isWithinBusinessHours();
-            chatbox.toggle(shouldShow);
+            $chatbox.toggle(shouldShow);
         }
 
         // Initial check
         updateWidgetVisibility();
 
-        // Check every minute
-        setInterval(updateWidgetVisibility, 60000);
+        // Only run business hours check if business hours are enabled for better performance
+        if (wpWhatsAppChatbox.businessHoursEnabled) {
+            setInterval(updateWidgetVisibility, 60000);
+        }
 
         // Update welcome message display
         function updateWelcomeMessage() {
-            const welcomeMessage = $('.wp-whatsapp-chatbox-welcome-message');
-            if (welcomeMessage.length) {
-                welcomeMessage.html(wpWhatsAppChatbox.welcomeMessage);
+            const $welcomeMessage = $('.wp-whatsapp-chatbox-welcome-message');
+            if ($welcomeMessage.length) {
+                // Use text() to prevent XSS, or safely handle pre-sanitized HTML from server
+                // Since the content is already sanitized server-side with wp_kses_post, we can use html()
+                // but this requires trust in server-side sanitization
+                $welcomeMessage.html(wpWhatsAppChatbox.welcomeMessage);
             }
         }
 
+        // Keyboard navigation and accessibility
+        function initializeAccessibility() {
+            // Enhanced focus management
+            $chatboxButton.on('click', function() {
+                if (!isVisible) {
+                    setTimeout(() => {
+                        $chatboxForm.find('.wp-whatsapp-chatbox-input').focus();
+                    }, 350); // Wait for animation
+                }
+            });
+            
+            // Escape key handling
+            $document.on('keydown', function(e) {
+                if (e.key === 'Escape' && isVisible) {
+                    e.preventDefault();
+                    toggleChat(false);
+                    $chatboxButton.focus();
+                }
+            });
+            
+            // Tab trap within popup for keyboard users
+            $chatboxPopup.on('keydown', function(e) {
+                if (e.key === 'Tab') {
+                    const focusableElements = $chatboxPopup.find('button, input, [tabindex="0"]');
+                    const firstElement = focusableElements.first();
+                    const lastElement = focusableElements.last();
+                    
+                    if (e.shiftKey && e.target === firstElement[0]) {
+                        e.preventDefault();
+                        lastElement.focus();
+                    } else if (!e.shiftKey && e.target === lastElement[0]) {
+                        e.preventDefault();
+                        firstElement.focus();
+                    }
+                }
+            });
+            
+            // Announce state changes to screen readers
+            $chatboxButton.on('click', function() {
+                const announcement = isVisible ? 
+                    'Chat window closed' : 
+                    'Chat window opened';
+                announceToScreenReader(announcement);
+            });
+        }
+        
+        // Announce content to screen readers
+        function announceToScreenReader(message) {
+            const announcement = $('<div>')
+                .attr('aria-live', 'polite')
+                .attr('aria-atomic', 'true')
+                .addClass('sr-only')
+                .text(message);
+            
+            $('body').append(announcement);
+            
+            // Remove after announcement
+            setTimeout(() => {
+                announcement.remove();
+            }, 1000);
+        }
+
+        // Initialize accessibility features
+        initializeAccessibility();
+        
         // Call it initially
         updateWelcomeMessage();
     });

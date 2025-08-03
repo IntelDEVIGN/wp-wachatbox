@@ -2,6 +2,19 @@
     * Public styles for WP WhatsApp Chatbox
     */
     
+    /* Screen reader only content */
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+    
     .wp-whatsapp-chatbox {
         --primary-color: var(--wp-whatsapp-primary-color, #25D366);
         --avatar-border-color: var(--wp-whatsapp-avatar-border-color, #ffffff);
@@ -13,6 +26,9 @@
         left: 20px;
         z-index: 9999;
         font-family: var(--font-family);
+        /* Optimize for animations and prevent layout shift */
+        contain: layout style;
+        will-change: transform;
     }
     /* Floating Action Button */
     
@@ -62,10 +78,12 @@
         box-shadow: var(--box-shadow);
         overflow: hidden;
         display: none;
-        transform: translateY(20px) scale(0.9);
+        transform: translate3d(0, 20px, 0) scale(0.9); /* Use 3D transforms for GPU acceleration */
         opacity: 0;
         transform-origin: bottom left;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        will-change: transform, opacity; /* Optimize for animations */
+        backface-visibility: hidden; /* Prevent flicker */
     }
     
     .wp-whatsapp-chatbox-popup[aria-hidden="false"] {
@@ -271,13 +289,44 @@
     }
     /* Responsive Design */
     
+    @media screen and (max-width: 768px) {
+        .wp-whatsapp-chatbox-popup {
+            width: calc(100vw - 20px);
+            height: calc(100vh - 140px);
+            bottom: 80px;
+            left: 10px;
+            max-height: 600px;
+        }
+    }
+    
     @media screen and (max-width: 480px) {
         .wp-whatsapp-chatbox-popup {
             width: calc(100vw - 40px);
             bottom: 90px;
+            border-radius: 12px 12px 0 0;
         }
         .wp-whatsapp-chatbox {
             bottom: 15px;
             left: 15px;
+        }
+        .wp-whatsapp-chatbox-button {
+            width: 56px;
+            height: 56px;
+        }
+    }
+
+    /* Reduced motion support for accessibility */
+    @media (prefers-reduced-motion: reduce) {
+        .wp-whatsapp-chatbox-popup,
+        .wp-whatsapp-chatbox-button {
+            transition: none;
+            will-change: auto;
+        }
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+        .wp-whatsapp-chatbox-popup {
+            border: 2px solid;
         }
     }

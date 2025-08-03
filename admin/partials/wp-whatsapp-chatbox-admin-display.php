@@ -14,6 +14,7 @@ if (!defined('WPINC')) {
         <?php
             settings_fields($this->plugin_name);
             do_settings_sections($this->plugin_name);
+            wp_nonce_field($this->plugin_name . '_settings_nonce', $this->plugin_name . '_nonce');
             submit_button(__('Save Settings', 'wp-whatsapp-chatbox'), 'primary', 'submit', true);
         ?>
     </form>

@@ -44,7 +44,8 @@ class WP_WhatsApp_Chatbox_Public {
     public function __construct($plugin_name, $version) {
         $this->plugin_name = $plugin_name;
         $this->version = $version;
-        $this->options = get_option($this->plugin_name);
+        // Options are now handled through centralized settings class
+        // No need to fetch here as we'll use WP_WhatsApp_Chatbox_Settings::get()
     }
 
     /**
@@ -78,30 +79,27 @@ class WP_WhatsApp_Chatbox_Public {
             true
         );
 
-        // Get plugin options
-        $options = $this->options;
-
-        // Prepare welcome message - preserve newlines
-        $welcome_message = isset($options['wp_whatsapp_chatbox_welcome_message']) ?
-            wp_kses($options['wp_whatsapp_chatbox_welcome_message'], array('br' => array())) :
-            __('¡Hola!, ¿Cómo le podemos ayudar?', 'wp-whatsapp-chatbox');
+        // Use centralized settings management for better performance
+        $welcome_message = WP_WhatsApp_Chatbox_Settings::get('wp_whatsapp_chatbox_welcome_message', 
+            __('Hello! How can we help you?', 'wp-whatsapp-chatbox'));
+        
+        // Sanitize welcome message
+        $welcome_message = wp_kses($welcome_message, array('br' => array()));
 
         wp_localize_script(
             $this->plugin_name,
             'wpWhatsAppChatbox',
             array(
-                'whatsappNumber' => isset($options['wp_whatsapp_chatbox_whatsapp_number']) ? $options['wp_whatsapp_chatbox_whatsapp_number'] : '',
-                'accountName' => isset($options['wp_whatsapp_chatbox_account_name']) ? $options['wp_whatsapp_chatbox_account_name'] : '',
-                'welcomeMessage' => nl2br($welcome_message), // Convert newlines to <br> tags
-                'primaryColor' => isset($options['wp_whatsapp_chatbox_primary_color']) ? $options['wp_whatsapp_chatbox_primary_color'] : '#00a884',
-                'displayDelay' => isset($options['wp_whatsapp_chatbox_display_delay']) ? intval($options['wp_whatsapp_chatbox_display_delay']) : 2000,
-                'borderRadius' => isset($options['wp_whatsapp_chatbox_border_radius']) ? intval($options['wp_whatsapp_chatbox_border_radius']) : 15,
-                'autoShowEnabled' => isset($options['wp_whatsapp_chatbox_auto_display']) && $options['wp_whatsapp_chatbox_auto_display'] === '1',
+                'whatsappNumber' => WP_WhatsApp_Chatbox_Settings::get('wp_whatsapp_chatbox_whatsapp_number', ''),
+                'accountName' => WP_WhatsApp_Chatbox_Settings::get('wp_whatsapp_chatbox_account_name', ''),
+                'welcomeMessage' => nl2br($welcome_message),
+                'primaryColor' => WP_WhatsApp_Chatbox_Settings::get('wp_whatsapp_chatbox_primary_color', '#00a884'),
+                'displayDelay' => intval(WP_WhatsApp_Chatbox_Settings::get('wp_whatsapp_chatbox_display_delay', 2000)),
+                'borderRadius' => intval(WP_WhatsApp_Chatbox_Settings::get('wp_whatsapp_chatbox_border_radius', 15)),
+                'autoShowEnabled' => WP_WhatsApp_Chatbox_Settings::get('wp_whatsapp_chatbox_auto_display', '1') === '1',
                 'pluginUrl' => plugin_dir_url(__FILE__),
-                'businessHoursEnabled' => isset($options['wp_whatsapp_chatbox_enable_hours']) ?
-                                        $options['wp_whatsapp_chatbox_enable_hours'] === '1' : false,
-                'businessHours' => isset($options['wp_whatsapp_chatbox_business_hours']) ?
-                                 $options['wp_whatsapp_chatbox_business_hours'] : array(),
+                'businessHoursEnabled' => WP_WhatsApp_Chatbox_Settings::get('wp_whatsapp_chatbox_enable_hours', '0') === '1',
+                'businessHours' => WP_WhatsApp_Chatbox_Settings::get('wp_whatsapp_chatbox_business_hours', array()),
                 'timezone' => wp_timezone_string()
             )
         );
@@ -116,6 +114,17 @@ class WP_WhatsApp_Chatbox_Public {
      */
     public function display_chatbox() {
         include_once 'partials/wp-whatsapp-chatbox-public-display.php';
+    }
+
+    /**
+     * Renders the chat widget HTML (alias for display_chatbox)
+     * Used by main plugin class and footer hook
+     *
+     * @since  1.0.0
+     * @return void
+     */
+    public function render_chat_widget() {
+        $this->display_chatbox();
     }
 
     /**
